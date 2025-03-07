@@ -3,7 +3,9 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Issue;
@@ -36,4 +38,13 @@ public class IssuesController {
                 .orElseThrow(() -> new IllegalArgumentException("Issue with id " + id + " not found"));
     }
 
+    @PutMapping("/{id}")
+    public Issue updateIssue(Issue issue) {
+        return issueRepositoryImpl.update(issue);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteIssue(int id) {
+        issueRepositoryImpl.deleteById(id);
+    }
 }

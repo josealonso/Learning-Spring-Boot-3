@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -34,12 +36,12 @@ public class IssuesControllerTest {
     @BeforeAll
     public void setup() {
         // given
+        var issue1 = new Issue(1, "title", "description-1", "photo1");
+        var issue2 = new Issue(2, "title", "description-2", "photo2");
+        var issue3 = new Issue(3, "title", "description-3", "photo3");
         issues = List.of(
-            new Issue(1, "title", "description-1", "photo1"),
-            new Issue(2, "title", "description-2", "photo2"),
-            new Issue(3, "title", "description-3", "photo3")
+            issue1, issue2, issue3
         );
-    
     }
 
     @Test
@@ -68,5 +70,33 @@ public class IssuesControllerTest {
         // then and verify
         assertEquals(result, issues.get(0));
         verify(issueRepositoryImpl).findById(anyInt());
+    }
+
+    @Test 
+    void givenAnExistingIssue_whenUpdateIssue_thenReturnsAnIssue() {
+
+        // Mock the repository behavior
+        when(issueRepositoryImpl.update(issues.get(0))).thenReturn(issues.get(0));
+
+        // when
+        var result = issuesController.updateIssue(issues.get(0));
+                
+        // then and verify
+        assertEquals(result, issues.get(0));
+        verify(issueRepositoryImpl).update(issues.get(0));
+    }
+
+    @Test
+    void givenAnExistingIssue_whenDeleteIssue_thenReturnsVoid() {
+     
+        // Mock the repository behavior
+        int issueId = 1;
+        doNothing().when(issueRepositoryImpl).deleteById(issueId);
+
+        // when
+        issuesController.deleteIssue(issueId);
+
+        // then and verify
+        verify(issueRepositoryImpl, times(1)).deleteById(issueId);
     }
 }
