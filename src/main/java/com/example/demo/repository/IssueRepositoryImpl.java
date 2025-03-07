@@ -12,7 +12,7 @@ public class IssueRepositoryImpl implements IssueRepository {
 
     private List<Issue> issues;
 
-    IssueRepositoryImpl(List<Issue> issues) {
+    public IssueRepositoryImpl(List<Issue> issues) {
         this.issues = issues;
     }
 

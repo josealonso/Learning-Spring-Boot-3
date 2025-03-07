@@ -9,13 +9,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Issue;
 import com.example.demo.repository.IssueRepositoryImpl;
 
-@RestController
+@RestController("/api/v1/issues")
 public class IssuesController {
 
     @Autowired
     IssueRepositoryImpl issueRepositoryImpl;
 
-    @GetMapping("/issues")
+    // constructor
+    public IssuesController(IssueRepositoryImpl issueRepositoryImpl) {
+        this.issueRepositoryImpl = issueRepositoryImpl;
+    }
+
+    @GetMapping
     public List<Issue> getIssues() {
       /* return ResponseEntity.ok()
         .header("Content-Type", "application/json")
@@ -23,6 +28,12 @@ public class IssuesController {
         // .build();  */
 
         return issueRepositoryImpl.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Issue getIssueById(int id) {
+        return issueRepositoryImpl.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Issue with id " + id + " not found"));
     }
 
 }
