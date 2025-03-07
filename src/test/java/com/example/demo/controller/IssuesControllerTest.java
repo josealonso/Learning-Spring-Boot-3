@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -29,7 +31,6 @@ public class IssuesControllerTest {
     @InjectMocks
     IssuesController issuesController;
 
-
     @BeforeAll
     public void setup() {
         // given
@@ -49,10 +50,23 @@ public class IssuesControllerTest {
 
         // when
         var result = issuesController.getIssues();
-        // var issuesController = new IssuesController(issueRepositoryImpl);
-        
+                
         // then and verify
         assertEquals(result, issues);
         verify(issueRepositoryImpl).findAll();
+    }
+
+    @Test
+    void givenAnExistingIssue_whenGetIssueById_thenReturnsAnIssue() {
+
+        // Mock the repository behavior
+        when(issueRepositoryImpl.findById(1)).thenReturn(Optional.of(issues.get(0)));
+
+        // when
+        var result = issuesController.getIssueById(1);
+                
+        // then and verify
+        assertEquals(result, issues.get(0));
+        verify(issueRepositoryImpl).findById(anyInt());
     }
 }
