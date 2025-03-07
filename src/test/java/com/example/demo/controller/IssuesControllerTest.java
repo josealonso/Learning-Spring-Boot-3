@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.demo.model.Issue;
@@ -30,12 +29,11 @@ public class IssuesControllerTest {
 
         // given
         var issues = List.of(
-            new Issue(1, "title", "description", "photo"),
-            new Issue(2, "title", "description", "photo"),
-            new Issue(3, "title", "description", "photo")
+            new Issue(1, "title", "description-1", "photo1"),
+            new Issue(2, "title", "description-2", "photo2"),
+            new Issue(3, "title", "description-3", "photo3")
         );
 
-        // issueRepositoryImpl = new IssueRepositoryImpl(issues);
         // Mock the repository behavior
         when(issueRepositoryImpl.findAll()).thenReturn(issues); 
 
