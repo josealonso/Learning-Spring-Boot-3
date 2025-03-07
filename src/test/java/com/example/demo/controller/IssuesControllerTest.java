@@ -47,7 +47,7 @@ public class IssuesControllerTest {
     @Test
     void givenAListOfIssues_whenGetIssues_thenReturnsListOfIssues() {
 
-        // Mock the repository behavior
+        // Mock the repository behavior, usually called "given"
         when(issueRepositoryImpl.findAll()).thenReturn(issues); 
 
         // when
@@ -61,35 +61,37 @@ public class IssuesControllerTest {
     @Test
     void givenAnExistingIssue_whenGetIssueById_thenReturnsAnIssue() {
 
-        // Mock the repository behavior
-        when(issueRepositoryImpl.findById(1)).thenReturn(Optional.of(issues.get(0)));
+        // Mock the repository behavior, usually called "given"
+        int issueId = 1;
+        when(issueRepositoryImpl.findById(issueId)).thenReturn(Optional.of(issues.get(issueId)));
 
         // when
-        var result = issuesController.getIssueById(1);
+        var result = issuesController.getIssueById(issueId);
                 
         // then and verify
-        assertEquals(result, issues.get(0));
+        assertEquals(result, issues.get(issueId));
         verify(issueRepositoryImpl).findById(anyInt());
     }
 
     @Test 
     void givenAnExistingIssue_whenUpdateIssue_thenReturnsAnIssue() {
 
-        // Mock the repository behavior
-        when(issueRepositoryImpl.update(issues.get(0))).thenReturn(issues.get(0));
+        // Mock the repository behavior, usually called "given"
+        int issueId = 1;
+        when(issueRepositoryImpl.update(issues.get(issueId))).thenReturn(issues.get(issueId));
 
         // when
-        var result = issuesController.updateIssue(issues.get(0));
+        var result = issuesController.updateIssue(issues.get(issueId));
                 
         // then and verify
-        assertEquals(result, issues.get(0));
-        verify(issueRepositoryImpl).update(issues.get(0));
+        assertEquals(result, issues.get(issueId));
+        verify(issueRepositoryImpl).update(issues.get(issueId));
     }
 
     @Test
     void givenAnExistingIssue_whenDeleteIssue_thenReturnsVoid() {
      
-        // Mock the repository behavior
+        // Mock the repository behavior, usually called "given"
         int issueId = 1;
         doNothing().when(issueRepositoryImpl).deleteById(issueId);
 
