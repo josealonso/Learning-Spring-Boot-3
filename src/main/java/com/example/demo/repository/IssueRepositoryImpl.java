@@ -10,7 +10,11 @@ import com.example.demo.model.Issue;
 @Repository
 public class IssueRepositoryImpl implements IssueRepository {
 
-    private List<Issue> issues;
+    private List<Issue> issues = List.of(
+        new Issue(1, "title", "description-1", "photo1"),
+        new Issue(2, "title", "description-2", "photo2"),
+        new Issue(3, "title", "description-3", "photo3")
+    );
 
     public IssueRepositoryImpl(List<Issue> issues) {
         this.issues = issues;
